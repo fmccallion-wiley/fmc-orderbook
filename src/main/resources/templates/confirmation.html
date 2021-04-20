@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Order Confirmation</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>Order Confirmed</h1>
+<p th:text="'Order ID: ' + ${order.orderid}" />
+<p th:text="'Client: ' + ${order.userid}" />
+<p th:text="'Symbol: ' + ${order.symbol}" />
+<p th:text="'Quantity: ' + ${order.qty}" />
+<p th:text="'Price: ' + ${order.price}" />
+<p th:text="'Type: ' + ${order.type}" />
+
+<a href="/buy">Submit a buy order</a>
+<br>
+<a href="/sell">Submit a sell order</a>
+
+</body>
+</html>

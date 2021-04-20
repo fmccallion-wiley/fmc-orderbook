@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Order History</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <style>
+    table, th, td {
+      border: 1px solid black;
+    }
+</style>
+</head>
+<body>
+<h3>Order History</h3>
+<table>
+    <tr>
+        <th>Order Type</th>
+        <th>Symbol</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Client</th>
+
+    </tr>
+<tr th:each="order: ${orders}">
+    <td th:text="${order.type}" />
+
+    <td th:text="${order.symbol}" />
+    <td th:text="${order.qty}" />
+    <td th:text="${order.price}" />
+    <td th:text="${order.userid}" />
+
+</tr>
+</table>
+</body>
+</html>

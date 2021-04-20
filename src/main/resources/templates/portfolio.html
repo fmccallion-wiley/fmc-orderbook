@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Portfolio Overview</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <style>
+    table, th, td {
+      border: 1px solid black;
+    }
+</style>
+</head>
+<body>
+<h3>Portfolio Overview</h3>
+<table>
+    <tr>
+        <th>Client</th>
+        <th>Symbol</th>
+        <th>Quantity</th>
+
+    </tr>
+    <tr th:each="portfolio: ${portfolios}">
+        <td th:text="${portfolio.userid}" />
+        <td th:text="${portfolio.symbol}" />
+        <td th:text="${portfolio.qty}" />
+
+
+    </tr>
+</table>
+</body>
+</html>
