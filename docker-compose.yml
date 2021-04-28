@@ -2,8 +2,8 @@ version: '3.0'
 services:
   database:
     build:
-      context: ./compose
-      dockerfile: Dockerfile.db
+      context: .
+      dockerfile: ./compose/Dockerfile.db
     container_name: orderbookdb
     image: m3/orderbookdb:1.0
     environment:
