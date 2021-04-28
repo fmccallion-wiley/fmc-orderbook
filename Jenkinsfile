@@ -9,9 +9,10 @@ pipeline {
     stage('Process Jobs') {
       steps {
         jobDsl(targets: ['*.groovy'].join('\n'), removedJobAction: 'IGNORE', removedViewAction: 'IGNORE', lookupStrategy: 'JENKINS_ROOT')
-        sh '''cd ./jenkins_builder
+        sh '''cd ./compose
 echo \'{ "credsStore": "ecr-login" }\' > /kaniko/.docker/config.json
-/kaniko/executor -f `pwd`/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=false --destination=${ECR_REPO}:orderbook-latest'''
+/kaniko/executor -f `pwd`/Dockerfile.db -c `pwd` --insecure --skip-tls-verify --cache=false --destination=${ECR_REPO}:orderbookdb-latest
+/kaniko/executor -f `pwd`/Dockerfile.api -c `pwd` --insecure --skip-tls-verify --cache=false --destination=${ECR_REPO}:orderbookapi-latest'''
       }
     }
 
