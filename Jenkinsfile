@@ -10,7 +10,7 @@ pipeline {
       steps {
         container(name: 'kaniko') {
           sh '''cd ./compose
-echo \\\'{ "credsStore": "ecr-login" }\\\' > /kaniko/.docker/config.json
+echo \'{ "credsStore": "ecr-login" }\' > /kaniko/.docker/config.json
 /kaniko/executor -f `pwd`/Dockerfile.db -c `pwd` --insecure --skip-tls-verify --cache=false --destination=${ECR_REPO}:orderbookdb-latest
 /kaniko/executor -f `pwd`/Dockerfile.api -c `pwd` --insecure --skip-tls-verify --cache=false --destination=${ECR_REPO}:orderbookapi-latest'''
         }
