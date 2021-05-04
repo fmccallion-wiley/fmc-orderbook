@@ -14,7 +14,7 @@ _END_
 # Wait for DB to start
 counter=0
 
-Bad command here
+exit 4
 
 while ! java $JAVA_OPTS -jar /app.jar
 do
