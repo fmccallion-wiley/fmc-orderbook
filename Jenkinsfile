@@ -10,7 +10,7 @@ pipeline {
       steps {
         container(name: 'kaniko') {
           sh '''echo \'{ "credsStore": "ecr-login" }\' > /kaniko/.docker/config.json
-/kaniko/executor -f `pwd`/compose/Dockerfile.db -c `pwd` --insecure --skip-tls-verify --cache=false --destination=${ECR_REPO}:orderbookdb-latest'''
+/kaniko/executor -f `pwd`/compose/Dockerfile.db -c `pwd` --insecure --skip-tls-verify --cache=false --destination=${ECR_REPO}:orderbookdb-dev-${BUILD_NUMBER}'''
         }
 
       }
@@ -19,7 +19,7 @@ pipeline {
       steps {
         container(name: 'kaniko') {
           sh '''echo \'{ "credsStore": "ecr-login" }\' > /kaniko/.docker/config.json
-/kaniko/executor -f `pwd`/compose/Dockerfile.api -c `pwd` --insecure --skip-tls-verify --cache=false --destination=${ECR_REPO}:orderbookapi-latest'''
+/kaniko/executor -f `pwd`/compose/Dockerfile.api -c `pwd` --insecure --skip-tls-verify --cache=false --destination=${ECR_REPO}:orderbookapi-dev-${BUILD_NUMBER}'''
         }
       }
     }
