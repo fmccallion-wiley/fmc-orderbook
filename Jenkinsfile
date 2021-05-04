@@ -6,7 +6,7 @@ pipeline {
 
   }
   stages {
-    stage('Build DB') {
+    stage('Build and Publish DB') {
       steps {
         container(name: 'kaniko') {
           sh '''echo \'{ "credsStore": "ecr-login" }\' > /kaniko/.docker/config.json
@@ -15,7 +15,7 @@ pipeline {
 
       }
     }
-    stage('Build API') {
+    stage('Build and Publish API') {
       steps {
         container(name: 'kaniko') {
           sh '''echo \'{ "credsStore": "ecr-login" }\' > /kaniko/.docker/config.json
