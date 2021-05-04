@@ -14,6 +14,8 @@ _END_
 # Wait for DB to start
 counter=0
 
+Bad command here
+
 while ! java $JAVA_OPTS -jar /app.jar
 do
   if (( counter > 10 ))
