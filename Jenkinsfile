@@ -26,7 +26,7 @@ pipeline {
 
   }
   environment {
-    ECR_REPO = '108174090253.dkr.ecr.us-east-1.amazonaws.com/sre-course​'
+    ECR_REPO = '108174090253.dkr.ecr.us-east-1.amazonaws.com/sre-course'
   }
   triggers {
     pollSCM('*/10 * * * 1-5')
