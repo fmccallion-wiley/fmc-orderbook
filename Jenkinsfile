@@ -26,6 +26,6 @@ pipeline {
 
   }
   environment {
-    ECR_REPO = 'public.ecr.aws/c0k5g8z4/sre-course'
+    ECR_REPO = '108174090253.dkr.ecr.us-east-1.amazonaws.com/sre-course​'
   }
 }
