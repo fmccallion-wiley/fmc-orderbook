@@ -1,0 +1,41 @@
+#!/bin/bash
+
+NUMENTRIES=3001
+TICKERS="TSLA SPCE AAPL AMZN RBLX RXT A AA ADT BA BAC BNED BP C DB DLB MS"
+TYPES="buy sell pending failed"
+RANDOM=$$
+USERS="Steve Paul August Dennis Davinia Charity Kim Haythem Pete Chase Matthew Becky"
+
+echo "use orderbook;" >02-data.sql
+
+x=1
+for user in $USERS
+do
+  echo "insert into user VALUES($x,'$user');"
+  ((x=x+1))
+done >>02-data.sql
+
+x=1
+while (( $x < $NUMENTRIES ))
+do
+  sym=$(echo $TICKERS | tr ' ' '\n'| head -$(($RANDOM%$(echo $TICKERS | wc -w))) | tail -1)
+  type=$(echo $TYPES | tr ' ' '\n'| head -$(($RANDOM%$(echo $TYPES | wc -w))) | tail -1)
+  userid=$(echo $USERS | tr ' ' '\n' | head -$(($RANDOM%$(echo $USERS | wc -w ))) | tail -1)
+  if [[ -z $sym ]]
+  then
+    sym=AAPL
+  fi
+  if [[ -z $type ]]
+  then
+    type=buy
+  fi
+  if [[ -z $userid ]]
+  then
+    userid=Steve
+  fi
+  price=$(echo "" | awk -v seed="$RANDOM" 'BEGIN{srand(seed)}{print rand()*500}')
+  qty=$(($RANDOM%50))
+  echo "insert into \`order\` VALUES ('$x','$sym','$type',$price,$qty,'$userid',null);"
+  #echo "insert into portfolio VALUES ($x,$qty,'$sym','$userid');"
+  ((x=x+1))
+done >>02-data.sql

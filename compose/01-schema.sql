@@ -5,11 +5,12 @@ use orderbook;
 -- Application create portfolio and user tables
 
 create table `user` (
-  userid varchar(255) primary key
+  userid varchar(255) primary key,
+  username varchar(255)
 );
 
 create table portfolio (
-  portfolioid bigint primary key,
+  portfolioid bigint, -- primary key,
   qty int null,
   symbol varchar(6) null,
   userid varchar(255) null
@@ -23,7 +24,7 @@ create table `order` (
   price numeric(8,2),
   qty int,
   userid varchar(255),
-  portfolioid bigint
+  portfolioid bigint null
   -- foreign key(portfolioid) references portfolio(portfolioid),
   -- foreign key(userid) references user(userid)
 );
