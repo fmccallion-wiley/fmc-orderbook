@@ -1,0 +1,24 @@
+version: '3.0'
+services:
+  database:
+    build:
+      context: .
+      dockerfile: ./compose/Dockerfile.db
+    container_name: orderbookdb
+    image: m3/orderbookdb:1.0
+    environment:
+      MYSQL_ROOT_PASSWORD: secret123
+
+  app:
+    build:
+      context: .
+      dockerfile: ./compose/Dockerfile.api
+    container_name: orderbook
+    image: m3/orderbook:1.0
+    links:
+      - database:orderbookdb
+    ports:
+      - "8080:8080"
+    environment:
+      DBUSER: root
+      DBPASSWORD: secret123

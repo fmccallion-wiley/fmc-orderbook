@@ -22,7 +22,7 @@ public class OrderController {
     @Autowired
     private PortfolioRepository portfolioRepository;
 
-    @GetMapping("/home")
+    @GetMapping("/")
     public String home(Model model) {
         return "home";
     }

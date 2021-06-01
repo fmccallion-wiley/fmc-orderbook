@@ -1,0 +1,3 @@
+FROM mysql:8.0.24
+ENV MYSQL_ROOT_PASSWORD=secret123
+COPY compose/0*.sql /docker-entrypoint-initdb.d/
