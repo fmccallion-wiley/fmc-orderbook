@@ -1,6 +1,8 @@
 -- https://www.mysqltutorial.org/mysql-triggers/working-mysql-scheduled-event/
+use orderbook;
 
 \! echo $MYSQL_ROOT_PASSWORD >/tmp/pw.txt
+
 set @pw=REPLACE(CONVERT(LOAD_FILE('/tmp/pw.txt') USING utf8),'\n','');
 
 CREATE TABLE `pwu` (

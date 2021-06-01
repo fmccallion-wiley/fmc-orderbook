@@ -1,0 +1,37 @@
+pipeline {
+  agent {
+    kubernetes {
+        yaml """\
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      labels:
+        podtype: mysql
+    spec:
+      serviceAccountName: jenkins-agent
+      containers:
+      - name: mysqlclient
+        image: mysql:8.0.25
+        command:
+        - cat
+        tty: true
+    """.stripIndent()
+    }
+  }
+  stages {
+    stage('Apply SQL update') {
+      steps {
+        container(name: 'mysqlclient') {
+          sh '''
+            mysql -u${DBUSER} -p${DBPASSWORD} -h${DBHOST} orderbook -e SQL/prodsafe.sql
+  '''
+        }
+      }
+    }
+  }
+  environment {
+    DBUSER='root'
+    DBPASSWORD='secret123'
+    DBHOST='orderbookdb.sre-example-dev'
+  }
+}
