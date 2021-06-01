@@ -1,3 +1,4 @@
 FROM mysql:8.0.24
 ENV MYSQL_ROOT_PASSWORD=secret123
+RUN sed -i 's,^secure-file-priv= NULL,secure-file-priv=/tmp,' /etc/mysql/my.cnf
 COPY compose/0*.sql /docker-entrypoint-initdb.d/
