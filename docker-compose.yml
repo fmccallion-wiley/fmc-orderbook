@@ -25,8 +25,8 @@ services:
 
   autoclient:
     build:
-      context: autoclient
-      dockerfile: Dockerfile.autoclient
+      context: .
+      dockerfile: ./autoclient/Dockerfile.autoclient
     container_name: autoclient
     image: m3/autoclient:1.0
     links:
