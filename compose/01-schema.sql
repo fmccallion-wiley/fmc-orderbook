@@ -24,7 +24,12 @@ create table `order` (
   price numeric(8,2),
   qty int,
   userid varchar(255),
-  portfolioid bigint null
+  portfolioid bigint null,
+  entrydate DATETIME DEFAULT CURRENT_TIMESTAMP()
   -- foreign key(portfolioid) references portfolio(portfolioid),
   -- foreign key(userid) references user(userid)
+);
+
+CREATE TABLE `pwu` (
+  pwu varchar(255)
 );
