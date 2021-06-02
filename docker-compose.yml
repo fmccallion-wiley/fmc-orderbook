@@ -22,3 +22,15 @@ services:
     environment:
       DBUSER: root
       DBPASSWORD: secret123
+
+  autoclient:
+    build:
+      context: autoclient
+      dockerfile: Dockerfile.autoclient
+    container_name: autoclient
+    image: m3/autoclient:1.0
+    links:
+      - app:orderbook
+    environment:
+      DELAYMINS: 1
+      MAX_RECORDS: 100
