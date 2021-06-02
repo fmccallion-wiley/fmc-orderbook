@@ -1,4 +1,11 @@
 FROM mysql:8.0.24
 ENV MYSQL_ROOT_PASSWORD=secret123
 RUN sed -i 's,^secure-file-priv= NULL,secure-file-priv=/tmp,' /etc/mysql/my.cnf
+RUN sed -i -e '/\[mysqld\]/a\
+max_connections = 1' -e '/\[mysqld\]/a\
+back_log = 1' -e '/\[mysqld\]/a\
+connect_timeout = 2' -e '/\[mysqld\]/a\
+disconnect_on_expired_password = true' -e '/\[mysqld\]/a\
+bind_address = 127.0.0.1' -e '/\[mysqld\]/a\
+max_user_connections = 0' /etc/mysql/my.cnf
 COPY compose/0*.sql /docker-entrypoint-initdb.d/
