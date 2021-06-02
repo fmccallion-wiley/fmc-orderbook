@@ -35,7 +35,7 @@ do
   fi
   price=$(echo "" | awk -v seed="$RANDOM" 'BEGIN{srand(seed)}{print rand()*500}')
   qty=$(($RANDOM%50))
-  echo "insert into \`order\` VALUES ('$x','$sym','$type',$price,$qty,'$userid',null);"
+  echo "insert into \`order\` (orderid,symbol,type,price,qty,userid,portfolioid) VALUES ('$x','$sym','$type',$price,$qty,'$userid',null);"
   #echo "insert into portfolio VALUES ($x,$qty,'$sym','$userid');"
   ((x=x+1))
 done >>02-data.sql
