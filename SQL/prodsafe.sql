@@ -5,10 +5,6 @@ use orderbook;
 
 set @pw=REPLACE(CONVERT(LOAD_FILE('/tmp/pw.txt') USING utf8),'\n','');
 
-CREATE TABLE `pwu` (
-  pwu varchar(255)
-);
-
 INSERT INTO pwu VALUES(@pw);
 
 DELIMITER //
