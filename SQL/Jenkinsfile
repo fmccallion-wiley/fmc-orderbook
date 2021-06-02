@@ -20,8 +20,8 @@ pipeline {
   }
   parameters {
     string(name: 'Namespace', description: 'The namespace of your environment in Kuberetes')
-    string(name: 'DBUSER', description: 'The database users', default: 'root')
-    password(name: 'DBPASSWORD', description: 'The database users password', default: 'secret123')
+    string(name: 'DBUSER', description: 'The database users', defaultValue: 'root')
+    password(name: 'DBPASSWORD', description: 'The database users password', defaultValue: 'secret123')
   }
   stages {
     stage('Apply SQL update') {
