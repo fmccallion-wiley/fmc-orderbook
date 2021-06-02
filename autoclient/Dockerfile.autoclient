@@ -1,10 +1,10 @@
 FROM python:3.10-rc-slim-buster
 RUN mkdir /app
-COPY autoclient.py /app
-COPY start.sh /app
-COPY symbols.list /app/
-COPY types.list /app/
-COPY users.list /app/
+COPY autoclient/autoclient.py /app
+COPY autoclient/start.sh /app
+COPY autoclient/symbols.list /app/
+COPY autoclient/types.list /app/
+COPY autoclient/users.list /app/
 RUN chmod +x /app/autoclient.py /app/start.sh
 RUN pip install pip --upgrade
 RUN pip install requests
