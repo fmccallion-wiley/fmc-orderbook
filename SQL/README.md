@@ -56,3 +56,13 @@ It will fail since it requires parameters to run.
 
 1. Click the name **dbupdateday4lab3**
 2. In the left menu click **Build with Parameters**
+3. You will need to add the namespace of your Kubernetes application to target, e.g. **team??dev** the username that is set for the database server, should be **root** and the password for the database user, if you've changed it, but default is secret123.
+
+The screen will look as follows;
+![Parameters](Parameters.png)
+
+When ready click the **Build** button.
+
+Then start to monitor your system to see what is happening.
+
+As a hint every 2 minutes the system will fail to connect to the database as the password keeps switching from good to bad.
