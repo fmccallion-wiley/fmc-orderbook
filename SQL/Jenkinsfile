@@ -18,12 +18,15 @@ pipeline {
     """.stripIndent()
     }
   }
+  parameters {
+    string(name: 'Namespace', description: 'The namespace of your environment in Kuberetes')
+  }
   stages {
     stage('Apply SQL update') {
       steps {
         container(name: 'mysqlclient') {
           sh '''
-            mysql -u${DBUSER} -p${DBPASSWORD} -h${DBHOST} orderbook -e SQL/prodsafe.sql
+            mysql -u${DBUSER} -p${DBPASSWORD} -h${DBHOST}.${Namespace} orderbook -e SQL/prodsafe.sql
   '''
         }
       }
@@ -32,6 +35,6 @@ pipeline {
   environment {
     DBUSER='root'
     DBPASSWORD='secret123'
-    DBHOST='orderbookdb.sre-example-dev'
+    DBHOST='orderbookdb'
   }
 }
