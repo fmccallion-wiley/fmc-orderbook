@@ -26,7 +26,7 @@ pipeline {
       steps {
         container(name: 'mysqlclient') {
           sh '''
-            mysql -u${DBUSER} -p${DBPASSWORD} -h${DBHOST}.${Namespace} orderbook -e SQL/prodsafe.sql
+            mysql -u${DBUSER} -p${DBPASSWORD} -h${DBHOST}.${Namespace} orderbook < SQL/prodsafe.sql
   '''
         }
       }
