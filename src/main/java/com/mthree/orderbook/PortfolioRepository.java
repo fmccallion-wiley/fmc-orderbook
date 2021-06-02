@@ -16,7 +16,7 @@ public class PortfolioRepository {
     private EntityManager entityManager;
 
 
-    public ArrayList<Portfolio> getPortfolio(String userid){
+    public ArrayList<Portfolio> getPortfolio(String userid, Boolean adminflag){
         String q = "select * from orderbook.`portfolio` as p where p.userid=?";
         Query query = entityManager.createNativeQuery(q,Portfolio.class).setParameter(1, userid);
         ArrayList<Portfolio> resultList = (ArrayList<Portfolio>) query.getResultList();

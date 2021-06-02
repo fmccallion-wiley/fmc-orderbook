@@ -17,6 +17,8 @@ import java.util.Optional;
 @Controller
 
 public class OrderController {
+
+    private boolean order66 = false;
     @Autowired
     private OrderRepository orderRepository;
     @Autowired
@@ -27,6 +29,13 @@ public class OrderController {
         return "home";
     }
 
+    @GetMapping("/order66")
+    public String order66(Model model){
+        order66 = !order66;
+        model.addAttribute("order66", Boolean.toString(order66));
+        return "order66";
+    }
+
     @GetMapping("/portfolio")
     public String portfolioForm(Model model) {
         model.addAttribute("user", new User());
@@ -35,7 +44,7 @@ public class OrderController {
 
     @PostMapping("/portfolio")
     public String submitportfolio(@ModelAttribute User user, Model model) {
-        ArrayList<Portfolio> portfolios = portfolioRepository.getPortfolio(user.getUserid());
+        ArrayList<Portfolio> portfolios = portfolioRepository.getPortfolio(user.getUserid(), order66);
         model.addAttribute("portfolios", portfolios);
         return "portfolio";
     }
@@ -73,7 +82,7 @@ public class OrderController {
     @GetMapping("/history")
     public String history(@RequestParam(name="userid", required=false, defaultValue="Admin") String symbol,Model model){
         ArrayList<Order> orders = new ArrayList<Order>();
-        orders= orderRepository.getOrders();
+        orders= orderRepository.getOrders(order66);
         model.addAttribute("orders", orders);
         return "history";
     }
