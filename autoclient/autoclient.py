@@ -1,22 +1,31 @@
+#!/usr/bin/env python
 
 from random import randrange
 import time
 import requests
+import os
 
+with open('symbols.list') as symbol_list:
+    symbols = [v.rstrip("\n") for v in symbol_list.readlines()]
+symbol_list.close()
 
+with open('types.list') as types_list:
+    types = [v.rstrip("\n") for v in types_list.readlines()]
+types_list.close()
 
-users = ["TEAM SRE","TEAM_MTHREE"]
-symbols = ["FB","TSLA","AAPL","C","ARK"]
-types = ["buy","sell"]
-MAX_QTY = 1000
-MAX_RECORDS = 10000
-MAX_PRICE = 1000
+with open('users.list') as users_lists:
+    users = [v.rstrip("\n") for v in users_lists.readlines()]
+users_lists.close()
 
+MAX_QTY = int(os.environ["MAX_QTY"])
+MAX_RECORDS = int(os.environ["MAX_RECORDS"])
+MAX_PRICE = int(os.environ["MAX_PRICE"])
+HOSTNAME = os.environ["appname"]
 
-url_buy = 'http://sreexampledev.computerlab.online/buy'
-url_sell = 'http://sreexampledev.computerlab.online/sell'
+url_buy = 'http://'+HOSTNAME+'/buy'
+url_sell = 'http://'+HOSTNAME+'/sell'
 
-for i in range(0,MAX_RECORDS):
+for i in range(0,randrange(MAX_RECORDS)):
     idx_users = randrange(len(users))
     idx_symbols = randrange(len(symbols))
     secondsSinceEpoch = str(time.time())
@@ -36,13 +45,3 @@ for i in range(0,MAX_RECORDS):
     print(row)
     print(url)
     x = requests.post(url, data=row)
-    #print(x.text)
-
-
-
-
-
-
-
-
-
