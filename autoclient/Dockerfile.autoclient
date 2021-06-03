@@ -1,5 +1,7 @@
 FROM python:3.10-rc-slim-buster
 RUN mkdir /app
+RUN apt-get -y update
+RUN apt-get -y install curl
 COPY autoclient/autoclient.py /app
 COPY autoclient/start.sh /app
 COPY autoclient/symbols.list /app/
