@@ -139,4 +139,7 @@ pipeline {
     imageACDevName='orderbookac-dev-'
     imageProdDevName='orderbookac-prod-'
   }
+  triggers {
+    pollSCM('*/10 * * * 1-5')
+  }
 }
