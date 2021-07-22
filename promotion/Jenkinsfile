@@ -53,6 +53,7 @@ pipeline {
             esac
 
             exit ${exitvalue}
+'''
           }
         }
       }
@@ -89,6 +90,7 @@ pipeline {
               esac
 
               exit ${exitvalue}
+'''
             }
           }
         }
