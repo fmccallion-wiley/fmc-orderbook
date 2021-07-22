@@ -19,7 +19,7 @@ pipeline {
     }
   }
   stages {
-    stage('Promote to Production') {
+    stage('Promote API to Production') {
       steps {
           container(name: 'awscli') {
             script {
@@ -30,8 +30,7 @@ pipeline {
             imgNum=''' + buildNumber + '''
             aws ecr-public get-login-password >ecrpw
             APIMANIFEST=$(aws ecr batch-get-image --repository-name sre-course --image-ids imageTag=${imageAPIDevName}${imgNum} --query 'images[].imageManifest' --output text)
-            DBMANIFEST=$(aws ecr batch-get-image --repository-name sre-course --image-ids imageTag=${imageDBDevName}${imgNum} --query 'images[].imageManifest' --output text)
-            ACMANIFEST=$(aws ecr batch-get-image --repository-name sre-course --image-ids imageTag=${imageACDevName}${imgNum} --query 'images[].imageManifest' --output text)
+
             # Check API
             if [ $(aws ecr describe-images --repository-name sre-course | grep "${imageAPIProdName}${imgNum}" | wc -l) -eq 0 ]
             then
@@ -41,37 +40,91 @@ pipeline {
                 exitvalue=1
               fi
             fi
-            # Database image
-            if [ $(aws ecr describe-images --repository-name sre-course | grep "${imageDBProdName}${imgNum}" | wc -l) -eq 0 ]
-            then
-              # We don't have prod so tag Dev to prod
-              if ! aws ecr put-image --repository-name sre-course --image-tag ${imageDBProdName}${imgNum} --image-manifest "$DBMANIFEST"
-              then
-                exitvalue="${exitvalue}2"
-              fi
-            fi
-            # Autoclient image
-            if [ $(aws ecr describe-images --repository-name sre-course | grep "${imageACProdName}${imgNum}" | wc -l) -eq 0 ]
-            then
-              # We don't have prod so tag Dev to prod
-              if ! aws ecr put-image --repository-name sre-course --image-tag ${imageACProdName}${imgNum} --image-manifest "$ACMANIFEST"
-              then
-                exitvalue="${exitvalue}2"
-              fi
-            fi
 
-          case ${exitvalue} in
-            0) echo "Update OK"
-               ;;
-            1) echo "API failed to push to repository"
-               ;;
-            2) echo "DB failed to push to repository"
-               ;;
-            12) echo "API and DB failed to push to repository"
-               ;;
-          esac
+            case ${exitvalue} in
+              0) echo "Update OK"
+                 ;;
+              1) echo "API failed to push to repository"
+                 ;;
+              2) echo "DB failed to push to repository"
+                 ;;
+              12) echo "API and DB failed to push to repository"
+                 ;;
+            esac
 
-          exit ${exitvalue}
+            exit ${exitvalue}
+          }
+        }
+      }
+      stage('Promote Database to Production') {
+        steps {
+            container(name: 'awscli') {
+              script {
+                buildNumber = Jenkins.instance.getItem('sre-orderbook').getItem('steve').lastSuccessfulBuild.number
+              }
+              sh '''
+              export AWS_DEFAULT_REGION=us-east-1
+              imgNum=''' + buildNumber + '''
+              aws ecr-public get-login-password >ecrpw
+              DBMANIFEST=$(aws ecr batch-get-image --repository-name sre-course --image-ids imageTag=${imageDBDevName}${imgNum} --query 'images[].imageManifest' --output text)
+              # Database image
+              if [ $(aws ecr describe-images --repository-name sre-course | grep "${imageDBProdName}${imgNum}" | wc -l) -eq 0 ]
+              then
+                # We don't have prod so tag Dev to prod
+                if ! aws ecr put-image --repository-name sre-course --image-tag ${imageDBProdName}${imgNum} --image-manifest "$DBMANIFEST"
+                then
+                  exitvalue="${exitvalue}2"
+                fi
+              fi
+
+              case ${exitvalue} in
+                0) echo "Update OK"
+                   ;;
+                1) echo "API failed to push to repository"
+                   ;;
+                2) echo "DB failed to push to repository"
+                   ;;
+                12) echo "API and DB failed to push to repository"
+                   ;;
+              esac
+
+              exit ${exitvalue}
+            }
+          }
+        }
+        stage('Promote AutoClient to Production') {
+          steps {
+              container(name: 'awscli') {
+                script {
+                  buildNumber = Jenkins.instance.getItem('sre-orderbook').getItem('steve').lastSuccessfulBuild.number
+                }
+                sh '''
+                export AWS_DEFAULT_REGION=us-east-1
+                imgNum=''' + buildNumber + '''
+                aws ecr-public get-login-password >ecrpw
+                ACMANIFEST=$(aws ecr batch-get-image --repository-name sre-course --image-ids imageTag=${imageACDevName}${imgNum} --query 'images[].imageManifest' --output text)
+                # Autoclient image
+                if [ $(aws ecr describe-images --repository-name sre-course | grep "${imageACProdName}${imgNum}" | wc -l) -eq 0 ]
+                then
+                  # We don't have prod so tag Dev to prod
+                  if ! aws ecr put-image --repository-name sre-course --image-tag ${imageACProdName}${imgNum} --image-manifest "$ACMANIFEST"
+                  then
+                    exitvalue="${exitvalue}2"
+                  fi
+                fi
+
+                case ${exitvalue} in
+                  0) echo "Update OK"
+                     ;;
+                  1) echo "API failed to push to repository"
+                     ;;
+                  2) echo "DB failed to push to repository"
+                     ;;
+                  12) echo "API and DB failed to push to repository"
+                     ;;
+                esac
+
+                exit ${exitvalue}
 '''
         }
       }
