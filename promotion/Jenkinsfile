@@ -84,6 +84,6 @@ pipeline {
     imageDBDevName='orderbookdb-dev-'
     imageDBProdName='orderbookdb-prod-'
     imageACDevName='orderbookac-dev-'
-    imageACDevName='orderbookac-prod-'
+    imageProdDevName='orderbookac-prod-'
   }
 }
