@@ -18,12 +18,15 @@ pipeline {
     """.stripIndent()
     }
   }
+  parameters {
+    string(name: 'TeamName', defaultValue: 'orderbook', description: 'Your team name in the form of cXXX-team??')
+  }
   stages {
     stage('Promote API to Production') {
       steps {
           container(name: 'awscli') {
             script {
-              buildNumber = Jenkins.instance.getItem('sre-orderbook').getItem('steve').lastSuccessfulBuild.number
+              buildNumber = Jenkins.instance.getItem("${TeamName}-sre-orderbook").getItem('steve').lastSuccessfulBuild.number
             }
             sh '''
             export AWS_DEFAULT_REGION=us-east-1
@@ -133,13 +136,13 @@ pipeline {
     }
   }
   environment {
-    ECR_REPO = '108174090253.dkr.ecr.us-east-1.amazonaws.com/sre-course​'
-    imageAPIDevName='orderbookapi-dev-'
-    imageAPIProdName='orderbookapi-prod-'
-    imageDBDevName='orderbookdb-dev-'
-    imageDBProdName='orderbookdb-prod-'
-    imageACDevName='orderbookac-dev-'
-    imageProdDevName='orderbookac-prod-'
+    ECR_REPO = '108174090253.dkr.ecr.us-east-1.amazonaws.com/sre-course'
+    imageAPIDevName="${TeamName}api-dev-"
+    imageAPIProdName="${TeamName}api-prod-"
+    imageDBDevName="${TeamName}db-dev-"
+    imageDBProdName="${TeamName}db-prod-"
+    imageACDevName="${TeamName}ac-dev-"
+    imageProdDevName="${TeamName}ac-prod-"
   }
   triggers {
     pollSCM('*/10 * * * 1-5')
