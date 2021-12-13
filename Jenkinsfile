@@ -6,7 +6,7 @@ pipeline {
 
   }
   parameters {
-    string(name: 'TeamName', defaultValue: 'orderbook', description: 'Your team name in the form of cXXX-team??')
+    string(name: 'TeamName', defaultValue: 'orderbook', description: 'Your team name in the form of cXXXteam??')
   }
   stages {
     stage('Build and Publish DB') {
