@@ -1,0 +1,18 @@
+#FROM python:3.10-rc-slim-buster
+FROM public.ecr.aws/docker/library/python:3.10-rc-slim-buster
+RUN mkdir /app
+COPY autoclient/autoclient.py /app
+COPY autoclient/start.sh /app
+COPY autoclient/symbols.list /app/
+COPY autoclient/types.list /app/
+COPY autoclient/users.list /app/
+RUN chmod +x /app/autoclient.py /app/start.sh
+RUN pip install pip --upgrade
+RUN pip install requests
+ENV MAX_QTY=1000
+ENV MAX_RECORDS=2000
+ENV MAX_PRICE=1000
+ENV appname=orderbook:8080
+ENV DELAYMINS=5
+WORKDIR /app
+ENTRYPOINT ["./start.sh"]
