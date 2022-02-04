@@ -6,11 +6,10 @@ COPY autoclient/start.sh /app
 COPY autoclient/symbols.list /app/
 COPY autoclient/types.list /app/
 COPY autoclient/users.list /app/
-RUN chmod +x /app/autoclient.py /app/start.sh
+COPY autoclient/main.py /app/
+RUN chmod +x /app/autoclient.py /app/start.sh /app/main.py
 RUN pip install pip --upgrade
 RUN pip install requests
-RUN apt-get -y update
-RUN apt-get -y install curl
 ENV MAX_QTY=1000
 ENV MAX_RECORDS=2000
 ENV MAX_PRICE=1000
