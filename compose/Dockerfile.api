@@ -15,4 +15,5 @@ RUN chmod +x start.sh
 ENV JAVA_OPTS=""
 ENV DBUSER=root
 ENV DBPASSWORD=secret123
+ENV LOGLEVEL=DEBUG
 ENTRYPOINT ["./start.sh"]

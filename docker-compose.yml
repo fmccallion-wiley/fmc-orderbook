@@ -22,6 +22,7 @@ services:
     environment:
       DBUSER: root
       DBPASSWORD: secret123
+      LOGLEVEL: DEBUG
 
   autoclient:
     build:
