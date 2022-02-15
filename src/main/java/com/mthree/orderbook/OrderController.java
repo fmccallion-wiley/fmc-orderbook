@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
+// @EnablePrometheusMetrics
 
 public class OrderController {
 
@@ -86,8 +87,6 @@ public class OrderController {
         model.addAttribute("orders", orders);
         return "history";
     }
-
-
 
 
 
