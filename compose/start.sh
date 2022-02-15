@@ -9,6 +9,10 @@ spring.datasource.password=${DBPASSWORD}
 management.endpoint.health.show-details=always
 management.endpoints.web.base-path=/
 management.endpoints.web.path-mapping.health=status
+logging.level.org.springframework=${LOGLEVEL}
+#logging.level.org.springframework.web=DEBUG
+#logging.level.org.hibernate=DEBUG
+#logging.level.=DEBUG
 _END_
 
 # Wait for DB to start
