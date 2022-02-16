@@ -67,7 +67,7 @@ GitHub no longer accept usernames and passwords so a token must be created and u
 * Go to https://jenkins.computerlab.online
 * Click on
 * In the Enter an item name box type in cXXXteamNN
-* Where XXX is the course number from your instructor
+* Where cXXX is the course number from your instructor
 * Where NN is the team number assigned to you by your instructor
 * Click the Pipeline task
 * Click OK at the bottom of the screen
