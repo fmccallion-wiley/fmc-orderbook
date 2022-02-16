@@ -5,15 +5,12 @@ pipeline {
     }
 
   }
-  parameters {
-    string(name: 'TeamName', defaultValue: 'orderbook', description: 'Your team name in the form of cXXXteam??')
-  }
   stages {
     stage('Build and Publish DB') {
       steps {
         container(name: 'kaniko') {
           sh '''echo \'{ "credsStore": "ecr-login" }\' > /kaniko/.docker/config.json
-/kaniko/executor -f `pwd`/compose/Dockerfile.db -c `pwd` --insecure --skip-tls-verify --cache=false --destination=${ECR_REPO}:${TeamName}db-dev-${BUILD_NUMBER}'''
+/kaniko/executor -f `pwd`/compose/Dockerfile.db -c `pwd` --insecure --skip-tls-verify --cache=false --destination=${ECR_REPO}:${JOB_NAME}db-dev-${BUILD_NUMBER}'''
         }
 
       }
@@ -22,7 +19,7 @@ pipeline {
       steps {
         container(name: 'kaniko') {
           sh '''echo \'{ "credsStore": "ecr-login" }\' > /kaniko/.docker/config.json
-/kaniko/executor -f `pwd`/compose/Dockerfile.api -c `pwd` --insecure --skip-tls-verify --cache=false --destination=${ECR_REPO}:${TeamName}api-dev-${BUILD_NUMBER}'''
+/kaniko/executor -f `pwd`/compose/Dockerfile.api -c `pwd` --insecure --skip-tls-verify --cache=false --destination=${ECR_REPO}:${JOB_NAME}api-dev-${BUILD_NUMBER}'''
         }
       }
     }
@@ -30,7 +27,7 @@ pipeline {
       steps {
         container(name: 'kaniko') {
           sh '''echo \'{ "credsStore": "ecr-login" }\' > /kaniko/.docker/config.json
-/kaniko/executor -f `pwd`/autoclient/Dockerfile.autoclient -c `pwd` --insecure --skip-tls-verify --cache=false --destination=${ECR_REPO}:${TeamName}ac-dev-${BUILD_NUMBER}'''
+/kaniko/executor -f `pwd`/autoclient/Dockerfile.autoclient -c `pwd` --insecure --skip-tls-verify --cache=false --destination=${ECR_REPO}:${JOB_NAME}ac-dev-${BUILD_NUMBER}'''
         }
       }
     }
