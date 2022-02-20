@@ -51,18 +51,49 @@ localhost:8080
 
 This is an example build job for the orderbook application pipeline.  This branch contains the pipeline and docker configuration for the application and database.
 
-The code in the [**Jenkinsfile**](Jenkinsfile) can be used in Jenkins through **Open Blue Ocean** plugin interface, or through the **multibranch pipeline**
+GitHub no longer accept usernames and passwords so a token must be created and used as the password in Jenkins.
 
-## Setting Up Blue Ocean pipeline
+**Steps to create the token;**
+* Go to https://github.com/settings/tokens
+* Click the Generate new token button
+* In the Note box type in a use for the token, e.g., SRETraining
+* Specify when you want the token to end.  For this training select 7 days
+* Tick the box next to repo
+* Tick the box next to user
+* Click the Generate token button
+* Copy the access token value shown and store it somewhere for the next task
 
-This is documented in Day 1, Module 3 - Jenkins.pptx
+**Steps to create a Jenkins pipeline job;**
+* Go to https://jenkins.computerlab.online
+* Click on
+* In the Enter an item name box type in cXXXteamNN
+* Where cXXX is the course number from your instructor
+* Where NN is the team number assigned to you by your instructor
+* Click the Pipeline task
+* Click OK at the bottom of the screen
 
-After setting up the Multibranch pipeline it will do the first scan and build automatically, but it doesn't poll the SCM and automatically build if someone pushes to their branch.  For this to happen you need to;
+**Steps to configuring the Jenkins job;**
+* Scroll down the configuration page to Pipeline section
+* Or click the Pipeline tab
+* Click on the Definition pull down and change to Pipeline script from SCM
+* Click on the pull down for SCM and select Git
+* In the Repository URL text box paste in the sre-orderbook repository
+https://github.com/The-Software-Guild/sre-orderbook.git
+* Click on the **Add** button
+* Click  **Jenkins** option with the house icon
+  * A new window opens
+  * **Kind** remains as a **Username and password**
+  * **Scope** remains as **Global (Jenkins, nodes, items, all child items, etc)**
+  * **Username** type in your GitHub username
+  * **Password** copy in your GitHub access token
+  * **ID** type in your name so that you are able to identify your token
+  * **Description** type in the same as what you typed into **ID**
+  * Click **Add**
+* Click on the pull down for Credentials and select your credential
+* Leave the branch as master for the time being, we may change it during the course
+* Leave the Script Path as Jenkinsfile
+  - You only need change this if the file is in a different place, or name
+* Click the Save button
+* Click Build to start the build
 
-1. Got to https://jenkins.computerlab.online/job/sre-orderbook
-2. Click **Configure**
-3. Scroll down to behaviours and set the information as follows;
-   ![Blue Ocean Config 1](images/BlueOcean1.png)
-4. Scroll down to **Property strategy** and make the following changes;
-   ![Blue Ocean Config 2](images/BlueOcean2.png)
-   NOTE: For this you will need to click **Add** under **Build strategies** and select **All Strategies Match** to get the first part.
+**NOTE:** This job has a 10 minute polling set up to check GitHub
