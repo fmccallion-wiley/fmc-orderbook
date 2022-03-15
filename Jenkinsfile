@@ -40,3 +40,4 @@ pipeline {
     pollSCM('*/10 * * * 1-5')
   }
 }
+
