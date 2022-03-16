@@ -26,7 +26,7 @@ pipeline {
       steps {
           container(name: 'awscli') {
             script {
-              buildNumber = Jenkins.instance.getItem("${TeamName}-sre-orderbook").getItem('steve').lastSuccessfulBuild.number
+              buildNumber = Jenkins.instance.getItem("c182-team02-sre-orderbook").getItem('c182-team02-sre-orderbook-christy').lastSuccessfulBuild.number
             }
             sh '''
             export AWS_DEFAULT_REGION=us-east-1
@@ -61,7 +61,7 @@ pipeline {
         steps {
             container(name: 'awscli') {
               script {
-                buildNumber = Jenkins.instance.getItem('sre-orderbook').getItem('steve').lastSuccessfulBuild.number
+                buildNumber = Jenkins.instance.getItem('c182-team02-sre-orderbook').getItem('c182-team02-sre-orderbook-christy').lastSuccessfulBuild.number
               }
               sh '''
               export AWS_DEFAULT_REGION=us-east-1
@@ -96,7 +96,7 @@ pipeline {
           steps {
               container(name: 'awscli') {
                 script {
-                  buildNumber = Jenkins.instance.getItem('sre-orderbook').getItem('steve').lastSuccessfulBuild.number
+                  buildNumber = Jenkins.instance.getItem('c182-team02-sre-orderbook').getItem('c182-team02-sre-orderbook-christy').lastSuccessfulBuild.number
                 }
                 sh '''
                 export AWS_DEFAULT_REGION=us-east-1
