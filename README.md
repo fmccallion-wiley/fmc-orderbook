@@ -2,6 +2,18 @@
 
 Orderbook is a Java Spring Boot application used for training purposes.  It can be compiled using Maven;
 
+# IMPORTANT
+
+It should be noted that this repository is read only for everyone, except course admins.
+
+If you need to make changes to this repository then you should do the following;
+
+1. Create a new repository in your own Git account
+2. Clone your new repository to your local machine
+3. Copy all files in your local version of sre-orderbook into your new repository
+4. Add, commit, push your new repository
+5. Update your Jenkins sre-orderbook job to point to your new repository
+
 ## Building
 
 ```
