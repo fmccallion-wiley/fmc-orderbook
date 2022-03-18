@@ -2,6 +2,11 @@
 
 Orderbook is a Java Spring Boot application used for training purposes.  It can be compiled using Maven;
 
+**IMPORTANT**
+This repository should remain read only, except to SRE course admins.
+
+If you need to modify this repository, you should clone it and then copy it to your own Git repository and work from their.
+
 ## Building
 
 ```
