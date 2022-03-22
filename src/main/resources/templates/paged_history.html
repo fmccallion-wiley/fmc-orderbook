@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Order History</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <style>
+            table, th, td {
+                border: 1px solid black;
+            }
+        </style>
+    </head>
+    <body>
+        <h3>Order History</h3>    
+
+
+<!--        <th:block th:each="i : ${#numbers.sequence(1,10)}">
+            <div th:text="${i}"></div>
+        </th:block>-->
+
+        <!-- Next and Previous buttons -->
+        <th:block th:if="${currentPage} eq 1">
+            <li class="disabled">Previous</li>
+        </th:block>
+        <th:block th:unless="${currentPage} eq 1">
+            <li><a th:href="@{/PagedHistory(currentPage=${currentPage-1})}">Previous</a></li>
+        </th:block>
+
+        <th:block th:if="${currentPage} ge ${totalPages}">
+            <li class="disabled">Next</li>
+        </th:block>
+        <th:block th:unless="${currentPage} eq ${totalPages}">
+            <li><a th:href="@{/PagedHistory(currentPage=${currentPage+1})}">Next</a></li>
+        </th:block>
+
+        <table>
+            <tr>
+                <th>Order Type</th>
+                <th>Symbol</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Client</th>
+            </tr>
+            <tr th:each="order: ${orders}">
+                <td th:text="${order.type}" />
+                <td th:text="${order.symbol}" />
+                <td th:text="${order.qty}" />
+                <td th:text="${order.price}" />
+                <td th:text="${order.userid}" />
+
+            </tr>
+        </table>
+    </body>
+</html>

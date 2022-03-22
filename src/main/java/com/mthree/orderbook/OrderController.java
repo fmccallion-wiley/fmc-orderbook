@@ -1,5 +1,7 @@
 package com.mthree.orderbook;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,21 +10,23 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.ui.Model;
 
-import java.sql.Array;
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Controller
 
 public class OrderController {
 
     private boolean order66 = false;
+    
     @Autowired
     private OrderRepository orderRepository;
     @Autowired
     private PortfolioRepository portfolioRepository;
+    
+    //Rudimentary Pagination Variables
+    private static final int RESULTS_PER_PAGE = 50;
+    private int pageNumber = 1;
+    private int totalPages;
 
     @GetMapping("/")
     public String home(Model model) {
@@ -87,8 +91,23 @@ public class OrderController {
         return "history";
     }
 
-
-
-
-
+    @GetMapping("/PagedHistory")
+    public String pagedHistory(@RequestParam(name="userid", required=false, defaultValue="Admin") String symbol, Model model, Integer currentPage){
+        //if currentPage is null, set to default(1) otherwise set pageNumber to currentPage
+        currentPage = pageNumber = (currentPage == null) ? (1):(currentPage);
+        int orderCount = orderRepository.getOrderCount();
+        ArrayList<Order> orders = new ArrayList<Order>();
+        
+        //Get Total Page Count
+        totalPages = (new BigDecimal(orderCount)).divide((new BigDecimal(RESULTS_PER_PAGE)), RoundingMode.CEILING).intValue();
+        
+        orders = orderRepository.getLimitedOrders(pageNumber, RESULTS_PER_PAGE);
+        model.addAttribute("orders", orders);
+        
+        //keep track of page count, both current and total
+        model.addAttribute("currentPage", currentPage);
+        model.addAttribute("totalPages", totalPages);
+       
+        return "paged_history";
+    }
 }

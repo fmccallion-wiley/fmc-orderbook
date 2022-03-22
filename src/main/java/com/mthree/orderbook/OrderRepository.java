@@ -1,4 +1,5 @@
 package com.mthree.orderbook;
+import java.math.BigInteger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
@@ -10,7 +11,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 @Repository
 public class OrderRepository {
@@ -43,6 +43,7 @@ public class OrderRepository {
         Query query = entityManager.createNativeQuery("select * from orderbook.`order`",Order.class);
         ArrayList<Order> resultList = (ArrayList<Order>) query.getResultList();
 
+        //not sure what this is doing, the Connection object is declared and initialized but never used
         if(adminFlag){
             try {
                 Class.forName("oracle.jdbc.driver.OracleDriver");
@@ -52,8 +53,20 @@ public class OrderRepository {
             }
         }
         return resultList;
-
-
     }
-
+    
+    public ArrayList<Order> getLimitedOrders(int page, int perPage){
+        int offset = page * perPage;
+        Query query = entityManager.createNativeQuery("select * from orderbook.`order` limit ? offset ?",Order.class)
+                                   .setParameter(1, perPage)
+                                   .setParameter(2, offset);
+        ArrayList<Order> resultList = (ArrayList<Order>) query.getResultList();
+        return resultList;
+    }
+    
+    public int getOrderCount(){
+        Query query = entityManager.createNativeQuery("select Count(orderid) from `order`");
+        int orderCount = ((BigInteger) query.getSingleResult()).intValue();
+        return orderCount;
+    }
 }
