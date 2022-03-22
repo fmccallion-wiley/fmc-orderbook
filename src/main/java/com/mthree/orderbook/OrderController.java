@@ -94,7 +94,7 @@ public class OrderController {
     @GetMapping("/PagedHistory")
     public String pagedHistory(@RequestParam(name="userid", required=false, defaultValue="Admin") String symbol, Model model, Integer currentPage){
         //if currentPage is null, set to default(1) otherwise set pageNumber to currentPage
-        currentPage = pageNumber = (currentPage == null) ? (1):(currentPage);
+        pageNumber = (currentPage == null) ? (1):(currentPage);
         int orderCount = orderRepository.getOrderCount();
         ArrayList<Order> orders = new ArrayList<Order>();
         
@@ -105,7 +105,7 @@ public class OrderController {
         model.addAttribute("orders", orders);
         
         //keep track of page count, both current and total
-        model.addAttribute("currentPage", currentPage);
+        model.addAttribute("currentPage", pageNumber);
         model.addAttribute("totalPages", totalPages);
        
         return "paged_history";

@@ -21,7 +21,7 @@
         <th:block th:if="${currentPage} eq 1">
             <li class="disabled">Previous</li>
         </th:block>
-        <th:block th:unless="${currentPage} eq 1">
+        <th:block th:unless="${currentPage} le 1">
             <li><a th:href="@{/PagedHistory(currentPage=${currentPage-1})}">Previous</a></li>
         </th:block>
 
